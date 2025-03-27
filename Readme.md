@@ -19,4 +19,4 @@ Personalização de cores em tempo real
 
 UI intuitiva com modais interativos
 
-Exportação via html2canvas
+Exportação via html2canvas.

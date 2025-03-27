@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 descricao: servico.querySelector('.servico-descricao').textContent,
                 valor: servico.querySelector('.servico-preco').getAttribute('data-valor')
             })),
+            modoEscuro: document.body.classList.contains('dark-mode'),
             imagem: bannerImagem.src,
             cores: {
                 primaria: corPrimariaInput.value,
@@ -64,6 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
             orcamento.servicos.forEach(servico => {
                 adicionarServico(servico.nome, servico.descricao, servico.valor);
             });
+            
+            // Aplica o modo escuro apenas ao body (não ao documento inteiro)
+            if (orcamento.modoEscuro) {
+                document.body.classList.add('dark-mode');
+                modoEscuroToggle.checked = true;
+            }
             
             calcularTotal();
         }
@@ -230,13 +237,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-
+    
         // Botão de fechar sidebar (mobile)
         if (sidebarCloseBtn) {
             sidebarCloseBtn.addEventListener('click', function() {
                 document.querySelector('.editor-sidebar').classList.remove('active');
                 document.querySelector('.sidebar-overlay').classList.remove('active');
             });
+        }
+        
+        // Configura o modo escuro
+        const modoEscuroToggle = document.getElementById('modo-escuro-toggle');
+        if (modoEscuroToggle) {  // Adicionei esta verificação para segurança
+            modoEscuroToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode', this.checked);
+                salvarOrcamento();
+            });
+    
+            // Carrega o estado do modo escuro
+            const modoEscuroSalvo = localStorage.getItem('orcamentoSalvo');
+            if (modoEscuroSalvo) {
+                const orcamento = JSON.parse(modoEscuroSalvo);
+                if (orcamento.modoEscuro) {
+                    document.body.classList.add('dark-mode');
+                    modoEscuroToggle.checked = true;
+                }
+            }
         }
     }
 
