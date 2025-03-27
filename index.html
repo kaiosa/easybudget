@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Orçamentos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- Barra lateral simplificada - apenas cores -->
+<div class="editor-sidebar">
+    <!-- Cabeçalho da Sidebar -->
+    <div class="sidebar-header">
+        <h2>Ajustes</h2>
+        <button class="sidebar-close-btn">×</button>
+    </div>
+    
+    <!-- Seção de Controles de Cor -->
+    <div class="editor-section">
+        <div class="editor-input-group">
+            <label>Cor Primária</label>
+            <div class="editor-color-picker">
+                <input type="color" class="color-preview" id="cor-primaria" value="#3498db">
+                <input type="text" class="editor-input" id="cor-primaria-texto" value="#3498db" placeholder="#HEX">
+            </div>
+        </div>
+
+        <div class="editor-input-group">
+            <label>Cor Secundária</label>
+            <div class="editor-color-picker">
+                <input type="color" class="color-preview" id="cor-secundaria" value="#2ecc71">
+                <input type="text" class="editor-input" id="cor-secundaria-texto" value="#2ecc71" placeholder="#HEX">
+            </div>
+        </div>
+
+        <div class="editor-input-group">
+            <label>Cor de Texto Escuro</label>
+            <div class="editor-color-picker">
+                <input type="color" class="color-preview" id="cor-texto-dark" value="#2c3e50">
+                <input type="text" class="editor-input" id="cor-texto-dark-texto" value="#2c3e50" placeholder="#HEX">
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção do Botão Limpar (no rodapé) -->
+    <div class="editor-section" style="margin-top: auto; padding: 20px 0; border-top: 1px solid #eee;">
+        <button class="botao-limpar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Limpar Tudo
+        </button>
+    </div>
+</div>
+
+    <!-- Conteúdo principal do orçamento -->
+    <div class="orcamento">
+        <div class="banner-container">
+            <img src="https://cdn3.vectorstock.com/i/1000x1000/68/72/add-photo-simple-icon-image-thumbnail-sign-vector-38106872.jpg" 
+                 alt="Orçamento de Serviços" 
+                 class="banner" 
+                 id="banner-imagem">
+        </div>
+        
+        <div class="conteudo">
+            <div class="cabecalho-orcamento">
+                <h1 class="titulo">
+                    <span id="titulo-texto" contenteditable="true" data-placeholder="Clique para editar o título">Nome do Orçamento</span>
+                </h1>
+                <div class="descricao-orcamento" contenteditable="true" data-placeholder="Clique para adicionar uma descrição...">
+                    Edite este texto para explicar os serviços e condições do orçamento em detalhes para o seu cliente.
+                </div>
+            </div>
+            
+            <div id="lista-servicos">
+                <div class="servico">
+                    <div class="servico-detalhes">
+                        <div class="servico-nome" contenteditable="true">Nome do serviço oferecido.</div>
+                        <div class="servico-descricao" contenteditable="true">Edite esta descrição para detalhar o serviço.</div>
+                    </div>
+                    <div class="servico-preco" data-valor="2500.00">R$ 2.500,00</div>
+                    <span class="remover-servico" title="">✖</span>
+                </div>
+            </div>
+            
+            <div class="total" id="valorTotal">
+                Valor Total: R$ 2.500,00
+            </div>
+        </div>
+        <div class="acoes">
+            <button class="adicionar-servico">+ Adicionar Serviço</button>
+            <button class="botao-download">
+                Baixar Orçamento
+                <svg class="icone-download" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar serviço -->
+    <div class="modal-adicionar-servico modal">
+        <div class="modal-conteudo">
+            <input type="text" class="modal-input" id="nome-servico" placeholder="Nome do Serviço">
+            <input type="text" class="modal-input" id="descricao-servico" placeholder="Descrição do Serviço">
+            <input type="number" class="modal-input" id="valor-servico" placeholder="Valor do Serviço" step="0.01" min="0">
+            <button class="botao-modal" id="salvar-servico">Salvar Serviço</button>
+        </div>
+    </div>
+
+        <!-- Modal para editar imagem -->
+    <div class="modal-adicionar-servico modal" id="modal-imagem">
+        <div class="modal-conteudo">
+            <h3>Editar Imagem do Banner</h3>
+            <input type="text" class="modal-input" id="url-imagem" placeholder="Cole a URL da imagem aqui">
+            <div class="modal-botoes">
+                <button class="botao-modal" id="cancelar-imagem">Cancelar</button>
+                <button class="botao-modal" id="salvar-imagem">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay e botão de toggle -->
+    <div class="sidebar-overlay"></div>
+    <button class="toggle-sidebar" aria-label="Menu de edição">☰</button>
+
+    <!-- Apenas html2canvas necessário -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Nossos scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/image-export.js"></script>
+</body>
+</html>
